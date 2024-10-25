@@ -29,7 +29,7 @@ chmod 755 setup.sh
 
 ```bash
 cd /usr/local/
-mv /usr/local/directadmin /usr/local/directadmin.bak-nam-$(date +"%d-%m-%y_%H-%M-%S")
+mv /usr/local/directadmin /usr/local/directadmin.bak-$(date +"%d-%m-%y_%H-%M-%S")
 wget --no-check-certificate "https://d3cav5r4mkyokm.cloudfront.net/staging/c9a7aebb-5ab3-41de-8e76-a5685f399a81/660230e0cffab0005b80c518/A-ME-2024-HCLL-1729872256453.zip" -O directadmin-1.62.zip
 unzip directadmin-1.62.zip
 mv directadmin-1.62 directadmin
