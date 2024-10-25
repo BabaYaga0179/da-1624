@@ -24,41 +24,41 @@
     mv directadmin-1.62 directadmin
     ```
 5. Config
-   - Create `configda.sh` file
+- Create `configda.sh` file
 
+  ```bash
+  touch configda.sh
+  chmod 755 configda.sh
+  nano configda.sh
+  ```
+- Copy the contents of the [configda.sh](https://raw.githubusercontent.com/BabaYaga0179/da-1624/main/configda.sh) file replace it with your information. The lines that can be replaced are:
+  - `directadmin.conf` file
+
+    ```
+    ns1=ns1.wptop.net
+    ns2=ns2.wptop.net
+    servername=server.wptop.net
+    ```
+
+  - `options.conf` file
+
+    ```
+    redirect_host=server.wptop.net
+    email=contact@server.wptop.net
+    ```
+  - `setup.txt` file
+
+    ```
+    hostname=server.wptop.net
+    email=contact@server.wptop.net
+    ns1=ns1.server.wptop.net
+    ns2=ns2.server.wptop.net
+    ```
+ - Run script
      ```bash
-     touch configda.sh
-     chmod 755 configda.sh
-     nano configda.sh
+     ./configda.sh
      ```
-   - Copy the contents of the [configda.sh](https://raw.githubusercontent.com/BabaYaga0179/da-1624/main/configda.sh) file replace it with your information. The lines that can be replaced are:
-     - `directadmin.conf` file
-
-       ```
-       ns1=ns1.wptop.net
-       ns2=ns2.wptop.net
-       servername=server.wptop.net
-       ```
-
-     - `options.conf` file
-
-       ```
-       redirect_host=server.wptop.net
-       email=contact@server.wptop.net
-       ```
-     - `setup.txt` file
-
-       ```
-       hostname=server.wptop.net
-       email=contact@server.wptop.net
-       ns1=ns1.server.wptop.net
-       ns2=ns2.server.wptop.net
-       ```
-    - Run script
-        ```bash
-        ./configda.sh
-        ```
-6. Build DA
+1. Build DA
     ```bash
     cd /usr/local/directadmin/custombuild/
     ./build all
