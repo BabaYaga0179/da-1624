@@ -1,16 +1,16 @@
 # Install
 ## Almalinux 8
-1. Install requirements
+### 1. Install requirements
 
     ```bash
     sudo yum -y install nano wget perl unzip systemd-devel epel-release net-tools bind-utils automake pigz bzip2 libcap-devel libdb-devel krb5-devel openssl openssl-devel initscripts network-scripts
     ```
-3. Install Development Tools
+### 2. Install Development Tools
     
     ```bash
     sudo yum groupinstall "Development Tools" -y
     ```
-4. Install DA
+### 3. Install DA
     
     ```bash
     touch /root/.skip_get_license
@@ -18,7 +18,7 @@
     chmod 755 setup.sh
     ./setup.sh auto
     ```
-5. Custom DA
+### 4. Custom DA
     
     ```bash
     cd /usr/local/
@@ -27,7 +27,7 @@
     unzip directadmin-1.62.zip
     mv directadmin-1.62 directadmin
     ```
-6. Config
+### 5. Config
 - Create `configda.sh` file
 
   ```bash
@@ -63,7 +63,7 @@
      ./configda.sh
      ```
 
-6. Build DA
+### 6. Build DA
     
     ```bash
     cd /usr/local/directadmin/custombuild/
