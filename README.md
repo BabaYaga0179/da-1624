@@ -72,7 +72,7 @@ nano configda.sh
 ./configda.sh
 ```
 
-## 6. Build DirectAdmin
+## 6. Set permission
 ```bash
 # Restart services
 systemctl restart crond
@@ -81,7 +81,7 @@ chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customiz
 rm -rf /usr/local/directadmin/scripts/setup.txt
 ```
 
-## 6. Build DirectAdmin
+## 7. Build DirectAdmin
 
 Finally, build DirectAdmin with the following commands:
 
