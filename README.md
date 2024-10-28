@@ -51,25 +51,35 @@ chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customiz
 ```
 
 ## 5. Configure DirectAdmin
-
-### Create and Edit Configuration Script
-
-1. Create the `configda.sh` file:
-
+### Backup file
 ```bash
-touch configda.sh
-chmod 755 configda.sh
-nano configda.sh
+cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options_1.conf
+cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf_1.conf
+cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
 ```
 
-2. Copy the contents from [configda.sh](https://github.com/BabaYaga0179/da-1624/blob/main/configda.sh) and replace the following information with your own.
+### Clear file content
+```bash
+truncate -s 0 /usr/local/directadmin/custombuild/options.conf
+truncate -s 0 /usr/local/directadmin/conf/directadmin.conf
+truncate -s 0 /usr/local/directadmin/scripts/setup.txt
+```
+
+### Copy the contents from [configda.sh](https://github.com/BabaYaga0179/da-1624/blob/main/configda.sh) and replace the following information with your own.
 
 - Can use file [config.html](https://github.com/BabaYaga0179/da-1624/blob/main/config.html) to generate content.
 
-1. Run the configuration script:
+### Fill content each file
+```bash
+nano /usr/local/directadmin/custombuild/options.conf
+```
 
 ```bash
-./configda.sh
+nano /usr/local/directadmin/conf/directadmin.conf
+```
+
+```bash
+nano /usr/local/directadmin/scripts/setup.txt
 ```
 
 ## 6. Set permission
@@ -78,7 +88,6 @@ nano configda.sh
 systemctl restart crond
 /usr/local/directadmin/scripts/set_permissions.sh all
 chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
-rm -rf /usr/local/directadmin/scripts/setup.txt
 ```
 
 ## 7. Build DirectAdmin
