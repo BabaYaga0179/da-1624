@@ -309,6 +309,8 @@ systemctl restart crond
 chmod +x /usr/local/directadmin/scripts/set_permissions.sh
 /usr/local/directadmin/scripts/set_permissions.sh all
 chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
+chmod +x /usr/local/directadmin/custombuild/build
+chmod 755 /usr/local/directadmin/directadmin
 `;
 
         const configOutput = document.getElementById('configOutput');
