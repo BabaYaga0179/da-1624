@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-4 sm:p-8">
+    <!-- Config Settings Section -->
+    <div class="max-w-2xl mx-auto bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-bold mb-4">Config Settings</h2>
+        <form id="configForm" class="mb-4">
+            <div class="mb-4">
+                <label for="php1_release" class="block text-gray-700 font-bold mb-2">PHP1 Release:</label>
+                <input type="text" id="php1_release" name="php1_release" value="8.1" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="php2_release" class="block text-gray-700 font-bold mb-2">PHP2 Release:</label>
+                <input type="text" id="php2_release" name="php2_release" value="no" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="php3_release" class="block text-gray-700 font-bold mb-2">PHP3 Release:</label>
+                <input type="text" id="php3_release" name="php3_release" value="no" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="mysql_inst" class="block text-gray-700 font-bold mb-2">Database Installation:</label>
+                <select id="mysql_inst" name="mysql_inst" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="mysql" selected>mysql</option>
+                    <option value="mariadb">mariadb</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="webserver" class="block text-gray-700 font-bold mb-2">Web Server:</label>
+                <select id="webserver" name="webserver" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="openlitespeed" selected>OpenLiteSpeed</option>
+                    <option value="nginx">Nginx</option>
+                    <option value="apache">Apache</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="redirect_host" class="block text-gray-700 font-bold mb-2">Redirect Host (*):</label>
+                <input type="text" id="redirect_host" name="redirect_host" placeholder="server.domain.com" required class="w-full px-3 py-2 border rounded-lg">
+            </div>
+            <div class="flex flex-col sm:flex-row items-center">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Update Config</button>
+                <span id="updateMessage" class="text-green-500 hidden">Config updated successfully!</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- Config Output Section -->
+    <div class="max-w-screen-xl mx-auto bg-white p-4 sm:p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-bold mb-4">Config Output</h3>
+        <div class="flex flex-col sm:flex-row items-center mb-4">
+            <button id="copyButton" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
+            <span id="copyMessage" class="text-green-500 hidden">Copied successfully!</span>
+            <span id="fillMessage" class="text-red-500 hidden">Please fill in the <strong>Redirect Host</strong> before copying.</span>
+        </div>
+        <pre id="configOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
+    </div>
+
+    <script>
+        const defaultConfig = `#!/bin/bash
+
+# cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +%d-%m-%y)
+cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/conf/directadmin.conf
+cat <<EOF > /usr/local/directadmin/conf/directadmin.conf
+add_userdb_quota=1
+admin_ssl_check_retries=0
+apache_public_html=0
+apache_ver=2.0
+awstats=0
+backup_gzip=2
+brute_force_log_scanner=1
+check_subdomain_owner=1
+cloud_cache=0
+default_private_html_link=1
+demodocsroot=./data/skins/evolution
+dkim=2
+dns_ttl=1
+docsroot=./data/skins/evolution
+dovecot=1
+enforce_difficult_passwords=1
+ethernet_dev=lo:100
+frontpage_on=0
+hide_brute_force_notifications=1
+http2=1
+ipv6=0
+jail=1
+letsencrypt=1
+litespeed=0
+mail_sni=1
+mysql_detect_correct_methods=1
+nginx=0
+nginx_proxy=0
+ns1=ns1.{redirect_host}
+ns2=ns2.{redirect_host}
+one_click_pma_login=1
+openlitespeed=1
+php_fpm_max_children_default=10
+pigz=2
+pointers_own_virtualhost=1
+pureftp=1
+quota_partition=/
+random_password_length=15
+random_password_length_max=18
+secure_access_group=access
+servername={redirect_host}
+ssl=0
+system_user_to_virtual_passwd=1
+unified_ftp_password_file=1
+use_xfs_quota=0
+webmail_link=roundcube
+zip=1
+zstd=1
+EOF
+
+# cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +%d-%m-%y)
+cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/custombuild/options.conf
+cat <<EOF > /usr/local/directadmin/custombuild/options.conf
+#WEB Server Settings
+php1_release={php1_release}
+php1_mode=lsphp
+php2_release={php2_release}
+php2_mode=lsphp
+php3_release={php3_release}
+php3_mode=lsphp
+php4_release=no
+php4_mode=lsphp
+secure_php=yes
+php_ini=no
+php_timezone=Asia/Ho_Chi_Minh
+php_ini_type=production
+x_mail_header=yes
+
+#MySQL Settings
+mysql=8.0
+mariadb=10.6
+mysql_inst={mysql_inst}
+mysql_backup=yes
+mysql_backup_gzip=no
+mysql_backup_dir=/usr/local/directadmin/custombuild/mysql_backups
+mysql_force_compile=no
+
+#WEB Server Settings
+unit=no
+webserver={webserver}
+http_methods=ALL
+litespeed_serialno=trial
+modsecurity=no
+modsecurity_ruleset=owasp
+apache_ver=2.4
+apache_mpm=auto
+mod_ruid2=no
+userdir_access=no
+harden_symlinks_patch=yes
+use_hostname_for_alias=no
+redirect_host={redirect_host}
+redirect_host_https=no
+
+#WEB Applications Settings
+phpmyadmin=yes
+phpmyadmin_public=no
+phpmyadmin_ver=5
+squirrelmail=no
+roundcube=yes
+webapps_inbox_prefix=no
+
+#ClamAV-related Settings
+clamav=no
+clamav_exim=yes
+modsecurity_uploadscan=no
+proftpd_uploadscan=no
+pureftpd_uploadscan=no
+suhosin_php_uploadscan=no
+
+#Mail Settings
+exim=yes
+eximconf=yes
+eximconf_release=4.5
+blockcracking=no
+easy_spam_fighter=no
+spamd=no
+sa_update=daily
+dovecot=yes
+dovecot_conf=yes
+mail_compress=no
+pigeonhole=yes
+
+#FTP Settings
+ftpd=pureftpd
+
+#Statistics Settings
+awstats=no
+webalizer=yes
+
+#PHP Extension Settings
+#CustomBuild Settings
+custombuild=2.0
+custombuild_plugin=yes
+autover=no
+bold=yes
+clean=yes
+cleanapache=yes
+clean_old_tarballs=yes
+clean_old_webapps=yes
+downloadserver=mirror.ihost.md
+unofficial_mirrors=no
+
+#Cronjob Settings
+cron=yes
+cron_frequency=daily
+email=contact@{redirect_host}
+notifications=no
+da_autoupdate=no
+updates=no
+webapps_updates=no
+
+#CloudLinux Settings
+cloudlinux=no
+cloudlinux_beta=no
+cagefs=no
+
+#Advanced Settings
+curl=no
+ssl_configuration=intermediate
+
+#PHP extensions can be found in php_extensions.conf
+redis=yes
+csf=no
+EOF
+
+# setup.txt
+# cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +%d-%m-%y)
+cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/conf/setup.txt
+cat <<EOF > /usr/local/directadmin/conf/setup.txt
+hostname={redirect_host}
+email=contact@{redirect_host}
+mysql=0d7db9ac1c1d09494dcf
+mysqluser=da_admin
+adminname=admin
+adminpass=
+ns1=ns1.{redirect_host}
+ns2=ns2.{redirect_host}
+ip=103.110.84.30
+netmask=255.255.252.0
+uid=13502
+lid=187425
+services=services_es70_64.tar.gz
+litespeedadmin=J6dxMaMTgIl7SR
+EOF
+
+# Set network
+# Remove ifcfg-lo:100 configuration
+rm -rf /etc/sysconfig/network-scripts/ifcfg-lo:100
+rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0:100
+
+# Create ifcfg-lo:100 configuration
+cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-lo:100
+DEVICE=lo:100
+ONBOOT=no
+ARPCHECK="no"
+IPADDR=176.99.3.34
+NETMASK=255.255.255.255
+EOF
+
+# Update ethernet_dev in directadmin.conf
+/usr/bin/perl -pi -e 's/^ethernet_dev=.*/ethernet_dev=lo:100/' /usr/local/directadmin/conf/directadmin.conf
+
+# Create directadmin.service configuration
+cat <<EOF > /etc/systemd/system/directadmin.service
+[Unit]
+Description=DirectAdmin Web Control Panel
+After=syslog.target network.target
+Documentation=http://www.directadmin.com
+
+[Service]
+Type=forking
+PIDFile=/run/directadmin.pid
+ExecStartPre=/usr/sbin/ifup lo:100
+ExecStartPost=/usr/bin/sleep 1
+ExecStartPost=/usr/sbin/ifdown lo:100
+ExecStart=/usr/local/directadmin/directadmin d
+ExecReload=/bin/kill -HUP $MAINPID
+WorkingDirectory=/usr/local/directadmin
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Update IP address in ifcfg-lo:100
+sed -i -e "s/IPADDR=103.221.222.40/IPADDR=176.99.3.34/g" /etc/sysconfig/network-scripts/ifcfg-lo:100
+systemctl daemon-reload
+
+# Restart services
+systemctl restart crond
+chmod -R 755 /usr/local/directadmin/scripts/set_permissions.sh
+/usr/local/directadmin/scripts/set_permissions.sh all
+chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
+chmod -R 755 /usr/local/directadmin
+`;
+
+        const configOutput = document.getElementById('configOutput');
+        const copyButton = document.getElementById('copyButton');
+        const configForm = document.getElementById('configForm');
+        const changedConfigContainer = document.getElementById('changedConfigContainer');
+        const redirectHostInput = document.getElementById('redirect_host');
+        const changedConfig = document.getElementById('changedConfig');
+        
+        // Display default config on page load
+        configOutput.innerHTML = defaultConfig;
+
+        configForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const configValues = Object.fromEntries(formData);
+
+            let updatedConfig = defaultConfig;
+            for (const [key, value] of Object.entries(configValues)) {
+                const placeholder = `{${key}}`;
+                updatedConfig = updatedConfig.replace(new RegExp(placeholder, 'g'), value);
+            }
+
+            // configOutput.innerHTML = updatedConfig;
+            configOutput.textContent = updatedConfig;
+            
+            // Show update message
+            const updateMessage = document.getElementById('updateMessage');
+            updateMessage.classList.remove('hidden');
+            setTimeout(() => {
+                updateMessage.classList.add('hidden');
+            }, 3000);
+        });
+
+        copyButton.addEventListener('click', function () {
+            if (redirectHostInput.value.trim() === "") {
+                const fillMessage = document.getElementById('fillMessage');
+                fillMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    fillMessage.classList.add('hidden');
+                }, 3000);
+            } else {
+                navigator.clipboard.writeText(configOutput.innerText).then(() => {
+                    const copyMessage = document.getElementById('copyMessage');
+                    copyMessage.classList.remove('hidden');
+                    setTimeout(() => {
+                        copyMessage.classList.add('hidden');
+                    }, 3000);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
