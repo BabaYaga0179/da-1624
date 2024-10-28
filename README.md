@@ -21,7 +21,7 @@ sudo yum groupinstall "Development Tools" -y
 ```bash
 touch /root/.skip_get_license
 wget -O setup.sh https://www.directadmin.com/setup.sh
-chmod 755 setup.sh
+chmod +x setup.sh
 ./setup.sh auto
 ```
 
