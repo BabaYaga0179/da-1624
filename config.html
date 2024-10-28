@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Config Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 p-4 sm:p-8">
@@ -49,6 +55,12 @@
                 <label for="redirect_host" class="block text-gray-700 font-bold mb-2">Redirect Host (*):</label>
                 <input type="text" id="redirect_host" name="redirect_host" placeholder="server.domain.com" required class="w-full px-3 py-2 border rounded-lg">
             </div>
+
+            <div class="mb-4">
+                <label for="ip" class="block text-gray-700 font-bold mb-2">Server IP (*):</label>
+                <input type="text" id="serverIP" name="ip" placeholder="1.1.1.1" required class="w-full px-3 py-2 border rounded-lg">
+            </div> 
+
             <div class="flex flex-col sm:flex-row items-center">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Update Config</button>
                 <span id="updateMessage" class="text-green-500 hidden">Config updated successfully!</span>
@@ -62,18 +74,20 @@
         <div class="flex flex-col sm:flex-row items-center mb-4">
             <button id="copyButton" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
             <span id="copyMessage" class="text-green-500 hidden">Copied successfully!</span>
-            <span id="fillMessage" class="text-red-500 hidden">Please fill in the <strong>Redirect Host</strong> before copying.</span>
+            <span id="fillMessage" class="text-red-500 hidden">Please fill in the <strong>Redirect Host</strong> and <strong>Server IP</strong> before copying.</span>
         </div>
         <pre id="configOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
     </div>
 
     <script>
-        const defaultConfig = `#!/bin/bash
+        const defaultConfig = `##########################################################################################
 
-# cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +%d-%m-%y)
-cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +"%d-%m-%y_%H-%M-%S")
-echo > /usr/local/directadmin/conf/directadmin.conf
-cat <<EOF > /usr/local/directadmin/conf/directadmin.conf
+/usr/local/directadmin/conf/directadmin.conf
+
+##########################################################################################
+
+cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf_1.conf
+cat <<EOF >> /usr/local/directadmin/conf/directadmin.conf
 add_userdb_quota=1
 admin_ssl_check_retries=0
 apache_public_html=0
@@ -124,10 +138,18 @@ zip=1
 zstd=1
 EOF
 
-# cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +%d-%m-%y)
-cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +"%d-%m-%y_%H-%M-%S")
-echo > /usr/local/directadmin/custombuild/options.conf
-cat <<EOF > /usr/local/directadmin/custombuild/options.conf
+
+
+
+
+##########################################################################################
+
+/usr/local/directadmin/custombuild/options.conf
+
+##########################################################################################
+
+cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options_1.conf
+cat <<EOF >> /usr/local/directadmin/custombuild/options.conf
 #WEB Server Settings
 php1_release={php1_release}
 php1_mode=lsphp
@@ -240,11 +262,17 @@ redis=yes
 csf=no
 EOF
 
-# setup.txt
-# cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +%d-%m-%y)
-cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +"%d-%m-%y_%H-%M-%S")
-echo > /usr/local/directadmin/conf/setup.txt
-cat <<EOF > /usr/local/directadmin/conf/setup.txt
+
+
+
+##########################################################################################
+
+/usr/local/directadmin/conf/setup.txt
+
+##########################################################################################
+
+cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
+cat <<EOF >> /usr/local/directadmin/scripts/setup.txt
 hostname={redirect_host}
 email=contact@{redirect_host}
 mysql=0d7db9ac1c1d09494dcf
@@ -253,7 +281,7 @@ adminname=admin
 adminpass=
 ns1=ns1.{redirect_host}
 ns2=ns2.{redirect_host}
-ip=103.110.84.30
+ip={ip}
 netmask=255.255.252.0
 uid=13502
 lid=187425
@@ -301,16 +329,15 @@ WantedBy=multi-user.target
 EOF
 
 # Update IP address in ifcfg-lo:100
-sed -i -e "s/IPADDR=103.221.222.40/IPADDR=176.99.3.34/g" /etc/sysconfig/network-scripts/ifcfg-lo:100
+sed -i -e "s/IPADDR={ip}/IPADDR=176.99.3.34/g" /etc/sysconfig/network-scripts/ifcfg-lo:100
 systemctl daemon-reload
 `;
 
         const configOutput = document.getElementById('configOutput');
         const copyButton = document.getElementById('copyButton');
         const configForm = document.getElementById('configForm');
-        const changedConfigContainer = document.getElementById('changedConfigContainer');
         const redirectHostInput = document.getElementById('redirect_host');
-        const changedConfig = document.getElementById('changedConfig');
+        const serverIP = document.getElementById('serverIP');
         
         // Display default config on page load
         configOutput.innerHTML = defaultConfig;
@@ -338,14 +365,14 @@ systemctl daemon-reload
         });
 
         copyButton.addEventListener('click', function () {
-            if (redirectHostInput.value.trim() === "") {
+            if (redirectHostInput.value.trim() === "" || serverIP.value.trim() === "") {
                 const fillMessage = document.getElementById('fillMessage');
                 fillMessage.classList.remove('hidden');
                 setTimeout(() => {
                     fillMessage.classList.add('hidden');
                 }, 3000);
             } else {
-                navigator.clipboard.writeText(configOutput.innerText).then(() => {
+                navigator.clipboard.writeText(configOutput.textContent).then(() => {
                     const copyMessage = document.getElementById('copyMessage');
                     copyMessage.classList.remove('hidden');
                     setTimeout(() => {
