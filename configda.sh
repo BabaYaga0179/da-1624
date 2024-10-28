@@ -1,5 +1,196 @@
 #!/bin/bash
 
+# cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +%d-%m-%y)
+cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/conf/directadmin.conf
+cat <<EOF > /usr/local/directadmin/conf/directadmin.conf
+add_userdb_quota=1
+admin_ssl_check_retries=0
+apache_public_html=0
+apache_ver=2.0
+awstats=0
+backup_gzip=2
+brute_force_log_scanner=1
+check_subdomain_owner=1
+cloud_cache=0
+default_private_html_link=1
+demodocsroot=./data/skins/evolution
+dkim=2
+dns_ttl=1
+docsroot=./data/skins/evolution
+dovecot=1
+enforce_difficult_passwords=1
+ethernet_dev=lo:100
+frontpage_on=0
+hide_brute_force_notifications=1
+http2=1
+ipv6=0
+jail=1
+letsencrypt=1
+litespeed=0
+mail_sni=1
+mysql_detect_correct_methods=1
+nginx=0
+nginx_proxy=0
+ns1=ns1.server.domain.com
+ns2=ns2.server.domain.com
+one_click_pma_login=1
+openlitespeed=1
+php_fpm_max_children_default=10
+pigz=2
+pointers_own_virtualhost=1
+pureftp=1
+quota_partition=/
+random_password_length=15
+random_password_length_max=18
+secure_access_group=access
+servername=server.domain.com
+ssl=0
+system_user_to_virtual_passwd=1
+unified_ftp_password_file=1
+use_xfs_quota=0
+webmail_link=roundcube
+zip=1
+zstd=1
+EOF
+
+# cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +%d-%m-%y)
+cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options.conf-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/custombuild/options.conf
+cat <<EOF > /usr/local/directadmin/custombuild/options.conf
+#WEB Server Settings
+php1_release=8.1
+php1_mode=lsphp
+php2_release=no
+php2_mode=lsphp
+php3_release=no
+php3_mode=lsphp
+php4_release=no
+php4_mode=lsphp
+secure_php=yes
+php_ini=no
+php_timezone=Asia/Ho_Chi_Minh
+php_ini_type=production
+x_mail_header=yes
+
+#MySQL Settings
+mysql=8.0
+mariadb=10.6
+mysql_inst=mysql
+mysql_backup=yes
+mysql_backup_gzip=no
+mysql_backup_dir=/usr/local/directadmin/custombuild/mysql_backups
+mysql_force_compile=no
+
+#WEB Server Settings
+unit=no
+webserver=openlitespeed
+http_methods=ALL
+litespeed_serialno=trial
+modsecurity=no
+modsecurity_ruleset=owasp
+apache_ver=2.4
+apache_mpm=auto
+mod_ruid2=no
+userdir_access=no
+harden_symlinks_patch=yes
+use_hostname_for_alias=no
+redirect_host=server.domain.com
+redirect_host_https=no
+
+#WEB Applications Settings
+phpmyadmin=yes
+phpmyadmin_public=no
+phpmyadmin_ver=5
+squirrelmail=no
+roundcube=yes
+webapps_inbox_prefix=no
+
+#ClamAV-related Settings
+clamav=no
+clamav_exim=yes
+modsecurity_uploadscan=no
+proftpd_uploadscan=no
+pureftpd_uploadscan=no
+suhosin_php_uploadscan=no
+
+#Mail Settings
+exim=yes
+eximconf=yes
+eximconf_release=4.5
+blockcracking=no
+easy_spam_fighter=no
+spamd=no
+sa_update=daily
+dovecot=yes
+dovecot_conf=yes
+mail_compress=no
+pigeonhole=yes
+
+#FTP Settings
+ftpd=pureftpd
+
+#Statistics Settings
+awstats=no
+webalizer=yes
+
+#PHP Extension Settings
+#CustomBuild Settings
+custombuild=2.0
+custombuild_plugin=yes
+autover=no
+bold=yes
+clean=yes
+cleanapache=yes
+clean_old_tarballs=yes
+clean_old_webapps=yes
+downloadserver=mirror.ihost.md
+unofficial_mirrors=no
+
+#Cronjob Settings
+cron=yes
+cron_frequency=daily
+email=contact@server.domain.com
+notifications=no
+da_autoupdate=no
+updates=no
+webapps_updates=no
+
+#CloudLinux Settings
+cloudlinux=no
+cloudlinux_beta=no
+cagefs=no
+
+#Advanced Settings
+curl=no
+ssl_configuration=intermediate
+
+#PHP extensions can be found in php_extensions.conf
+redis=yes
+csf=no
+EOF
+
+# setup.txt
+# cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +%d-%m-%y)
+cp /usr/local/directadmin/conf/setup.txt /usr/local/directadmin/conf/setup.txt-$(date +"%d-%m-%y_%H-%M-%S")
+echo > /usr/local/directadmin/conf/setup.txt
+cat <<EOF > /usr/local/directadmin/conf/setup.txt
+hostname=server.domain.com
+email=contact@server.domain.com
+mysql=0d7db9ac1c1d09494dcf
+mysqluser=da_admin
+adminname=admin
+adminpass=
+ns1=ns1.server.domain.com
+ns2=ns2.server.domain.com
+ip=103.110.84.30
+netmask=255.255.252.0
+uid=13502
+lid=187425
+services=services_es70_64.tar.gz
+litespeedadmin=J6dxMaMTgIl7SR
+EOF
+
 # Set network
 # Remove ifcfg-lo:100 configuration
 rm -rf /etc/sysconfig/network-scripts/ifcfg-lo:100
