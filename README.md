@@ -47,7 +47,7 @@ chmod 755 configda.sh
 nano configda.sh
 ```
 
-2. Copy the contents from [configda.sh](https://raw.githubusercontent.com/BabaYaga0179/da-1624/main/configda.sh) and replace the following information with your own:
+2. Copy the contents from [configda.sh]([https://raw.githubusercontent.com/BabaYaga0179/da-1624/main/configda.sh](https://github.com/BabaYaga0179/da-1624/blob/main/configda.sh)) and replace the following information with your own:
 
 #### In `directadmin.conf`:
 ```
