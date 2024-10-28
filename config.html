@@ -303,12 +303,6 @@ EOF
 # Update IP address in ifcfg-lo:100
 sed -i -e "s/IPADDR=103.221.222.40/IPADDR=176.99.3.34/g" /etc/sysconfig/network-scripts/ifcfg-lo:100
 systemctl daemon-reload
-
-# Restart services
-systemctl restart crond
-/usr/local/directadmin/scripts/set_permissions.sh all
-chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
-rm -rf /usr/local/directadmin/scripts/setup.txt
 `;
 
         const configOutput = document.getElementById('configOutput');

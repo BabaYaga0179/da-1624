@@ -29,10 +29,25 @@ chmod +x setup.sh
 
 ```bash
 cd /usr/local/
-mv /usr/local/directadmin /usr/local/directadmin.bak-$(date +"%d-%m-%y_%H-%M-%S")
-wget --no-check-certificate "https://d3cav5r4mkyokm.cloudfront.net/staging/c9a7aebb-5ab3-41de-8e76-a5685f399a81/660230e0cffab0005b80c518/A-ME-2024-XP6D-1730110138868.zip" -O directadmin-1.62.zip
+mv /usr/local/directadmin /usr/local/directadmin.bak-nam
+wget --no-check-certificate "https://onedrive.live.com/download?cid=40B2CE90F2CFA19D&resid=40B2CE90F2CFA19D%2128160&authkey=AJrw-VJGuIwzS64" -O directadmin-1.62.zip
 unzip directadmin-1.62.zip
+systemctl daemon-reload
 mv directadmin-1.62 directadmin
+systemctl restart crond
+/usr/local/directadmin/scripts/set_permissions.sh all
+```
+
+```bash
+mv /usr/local/directadmin/custombuild /usr/local/directadmin/custombuild.bak-goc
+cd /usr/local/directadmin/
+git clone https://github.com/skinsnguyen/custombuild.git
+```
+
+```bash
+systemctl restart crond
+/usr/local/directadmin/scripts/set_permissions.sh all
+chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
 ```
 
 ## 5. Configure DirectAdmin
@@ -55,6 +70,15 @@ nano configda.sh
 
 ```bash
 ./configda.sh
+```
+
+## 6. Build DirectAdmin
+```bash
+# Restart services
+systemctl restart crond
+/usr/local/directadmin/scripts/set_permissions.sh all
+chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
+rm -rf /usr/local/directadmin/scripts/setup.txt
 ```
 
 ## 6. Build DirectAdmin
