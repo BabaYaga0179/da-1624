@@ -32,22 +32,16 @@ cd /usr/local/
 mv /usr/local/directadmin /usr/local/directadmin.bak-nam
 wget --no-check-certificate "https://onedrive.live.com/download?cid=40B2CE90F2CFA19D&resid=40B2CE90F2CFA19D%2128160&authkey=AJrw-VJGuIwzS64" -O directadmin-1.62.zip
 unzip directadmin-1.62.zip
-systemctl daemon-reload
 mv directadmin-1.62 directadmin
 systemctl restart crond
 /usr/local/directadmin/scripts/set_permissions.sh all
+systemctl daemon-reload
 ```
 
 ```bash
 mv /usr/local/directadmin/custombuild /usr/local/directadmin/custombuild.bak-goc
 cd /usr/local/directadmin/
 git clone https://github.com/skinsnguyen/custombuild.git
-```
-
-```bash
-systemctl restart crond
-/usr/local/directadmin/scripts/set_permissions.sh all
-chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
 ```
 
 ## 5. Configure DirectAdmin
@@ -83,11 +77,12 @@ nano /usr/local/directadmin/scripts/setup.txt
 ```
 
 ## 6. Set permission
+
 ```bash
-# Restart services
 systemctl restart crond
 /usr/local/directadmin/scripts/set_permissions.sh all
 chown -R diradmin:diradmin /usr/local/directadmin/data/users/admin/skin_customizations/*
+systemctl daemon-reload
 ```
 
 ## 7. Build DirectAdmin
@@ -97,4 +92,5 @@ Finally, build DirectAdmin with the following commands:
 ```bash
 cd /usr/local/directadmin/custombuild/
 ./build all
+./build rewrite_confs
 ```
