@@ -29,7 +29,7 @@ chmod +x setup.sh
 
 ```bash
 cd /usr/local/
-mv /usr/local/directadmin /usr/local/directadmin.bak-nam
+mv /usr/local/directadmin /usr/local/directadmin.bak-old
 wget --no-check-certificate "https://onedrive.live.com/download?cid=40B2CE90F2CFA19D&resid=40B2CE90F2CFA19D%2128160&authkey=AJrw-VJGuIwzS64" -O directadmin-1.62.zip
 unzip directadmin-1.62.zip
 mv directadmin-1.62 directadmin

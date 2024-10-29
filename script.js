@@ -192,6 +192,12 @@ lid=187425
 services=services_es70_64.tar.gz
 litespeedadmin=J6dxMaMTgIl7SR
 EOF
+
+mv /usr/local/directadmin/data/admin/show_all_users.cache /usr/local/directadmin/data/admin/show_all_users.cache_1
+cp /usr/local/directadmin.bak-old/data/admin/ip.list /usr/local/directadmin/data/admin/ip.list
+cp /usr/local/directadmin.bak-old/data/users/admin/ip.list /usr/local/directadmin/data/users/admin/ip.list
+cp /usr/local/directadmin.bak-old/data/users/admin/reseller.conf /usr/local/directadmin/data/users/admin/reseller.conf
+cp /usr/local/directadmin.bak-old/data/users/admin/user_ip.list /usr/local/directadmin/data/users/admin/user_ip.list
 `;
 
 const networkConfig=`#Auth: wptop.net
