@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-4 sm:p-8">
+    <!-- Config Settings Section -->
+    <div class="max-w-2xl mx-auto bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-bold mb-4">Config Settings</h2>
+        <form id="configForm" class="mb-4">
+            <div class="mb-4">
+                <label for="php1_release" class="block text-gray-700 font-bold mb-2">PHP1 Release:</label>
+                <input type="text" id="php1_release" name="php1_release" value="8.1" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="php2_release" class="block text-gray-700 font-bold mb-2">PHP2 Release:</label>
+                <input type="text" id="php2_release" name="php2_release" value="no" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="php3_release" class="block text-gray-700 font-bold mb-2">PHP3 Release:</label>
+                <input type="text" id="php3_release" name="php3_release" value="no" class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="mysql_inst" class="block text-gray-700 font-bold mb-2">Database Installation:</label>
+                <select id="mysql_inst" name="mysql_inst" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="mysql" selected>mysql</option>
+                    <option value="mariadb">mariadb</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="webserver" class="block text-gray-700 font-bold mb-2">Web Server:</label>
+                <select id="webserver" name="webserver" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="openlitespeed" selected>OpenLiteSpeed</option>
+                    <option value="nginx">Nginx</option>
+                    <option value="apache">Apache</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="redirect_host" class="block text-gray-700 font-bold mb-2">Redirect Host (*):</label>
+                <input type="text" id="redirect_host" name="redirect_host" placeholder="server.domain.com" required class="w-full px-3 py-2 border rounded-lg">
+            </div>
+
+            <div class="mb-4">
+                <label for="ip" class="block text-gray-700 font-bold mb-2">Server IP (*):</label>
+                <input type="text" id="serverIP" name="ip" placeholder="1.1.1.1" required class="w-full px-3 py-2 border rounded-lg">
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Update Config</button>
+                <span id="updateMessage" class="text-green-500 hidden">Config updated successfully!</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- Output -->
+    <div class="w-full mx-auto p-4 sm:p-6">
+        <div class="flex flex-col lg:flex-row gap-4">
+            
+            <!-- First Config Output Block -->
+            <div class="flex-1 bg-white p-4 rounded-lg shadow-md overflow-hidden">
+                <h3 class="text-xl font-bold mb-4">Directadmin.conf</h3>
+                <div class="flex flex-col sm:flex-row items-center mb-4">
+                    <button id="copyButton1" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
+                    <span id="copyMessage1" class="text-green-500 hidden">Copied successfully!</span>
+                    <span id="fillMessage1" class="text-red-500 hidden">Please fill in the required field.</span>
+                </div>
+                <pre id="directadminConfigOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
+            </div>
+    
+            <!-- Second Config Output Block -->
+            <div class="flex-1 bg-white p-4 rounded-lg shadow-md overflow-hidden">
+                <h3 class="text-xl font-bold mb-4">Options.conf</h3>
+                <div class="flex flex-col sm:flex-row items-center mb-4">
+                    <button id="copyButton2" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
+                    <span id="copyMessage2" class="text-green-500 hidden">Copied successfully!</span>
+                    <span id="fillMessage2" class="text-red-500 hidden">Please fill in the required field.</span>
+                </div>
+                <pre id="optionsConfigOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
+            </div>
+    
+            <!-- Third Config Output Block -->
+            <div class="flex-1 bg-white p-4 rounded-lg shadow-md overflow-hidden">
+                <h3 class="text-xl font-bold mb-4">Setup.txt</h3>
+                <div class="flex flex-col sm:flex-row items-center mb-4">
+                    <button id="copyButton3" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
+                    <span id="copyMessage3" class="text-green-500 hidden">Copied successfully!</span>
+                    <span id="fillMessage3" class="text-red-500 hidden">Please fill in the required field.</span>
+                </div>
+                <pre id="setupConfigOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
+            </div>
+
+            <!-- Fourth Config Output Block -->
+            <div class="flex-1 bg-white p-4 rounded-lg shadow-md overflow-hidden">
+                <h3 class="text-xl font-bold mb-4">Network Config</h3>
+                <div class="flex flex-col sm:flex-row items-center mb-4">
+                    <button id="copyButton4" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">Copy to Clipboard</button>
+                    <span id="copyMessage4" class="text-green-500 hidden">Copied successfully!</span>
+                    <span id="fillMessage4" class="text-red-500 hidden">Please fill in the required field.</span>
+                </div>
+                <pre id="networkConfigOutput" class="bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm overflow-x-auto"></pre>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
