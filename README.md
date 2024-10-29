@@ -59,7 +59,7 @@ truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 truncate -s 0 /usr/local/directadmin/scripts/setup.txt
 ```
 
-### Copy the contents from [configda.sh](https://github.com/BabaYaga0179/da-1624/blob/main/configda.sh) and replace the following information with your own.
+### Copy the contents from [configda.sh](https://github.com/BabaYaga0179/install-da/blob/main/configda.sh) and replace the following information with your own.
 
 - Can use file this website to generate content: https://babayaga0179.github.io/install-da/
 

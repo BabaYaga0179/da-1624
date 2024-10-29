@@ -57,6 +57,7 @@ EOF
 const optionsConfig = `#Auth: wptop.net
 
 cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options_1.conf
+truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 cat <<EOF >> /usr/local/directadmin/custombuild/options.conf
 #WEB Server Settings
 php1_release={php1_release}
@@ -175,7 +176,6 @@ const setupConfig = `#Auth: wptop.net
 
 cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
 truncate -s 0 /usr/local/directadmin/scripts/setup.txt
-truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 cat <<EOF >> /usr/local/directadmin/scripts/setup.txt
 hostname={redirect_host}
 email=contact@{redirect_host}
