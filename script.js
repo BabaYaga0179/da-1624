@@ -2,6 +2,9 @@ const directadminConfig = `cp /usr/local/directadmin.bak-old/conf/cacert.pem /us
 cp /usr/local/directadmin.bak-old/conf/cakey.pem /usr/local/directadmin/conf/cakey.pem
 cp /usr/local/directadmin.bak-old/conf/carootcert.pem /usr/local/directadmin/conf/carootcert.pem
 
+rm -rf /usr/local/directadmin/conf/my.cnf
+rm -rf /usr/local/directadmin/conf/mysql.conf
+
 cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin_1.conf
 truncate -s 0 /usr/local/directadmin/conf/directadmin.conf
 cat <<EOF > /usr/local/directadmin/conf/directadmin.conf
@@ -178,8 +181,6 @@ truncate -s 0 /usr/local/directadmin/scripts/setup.txt
 cat <<EOF > /usr/local/directadmin/scripts/setup.txt
 hostname={redirect_host}
 email=contact@{redirect_host}
-mysql=0d7db9ac1c1d09494dcf
-mysqluser=da_admin
 adminname=admin
 adminpass=
 ns1=ns1.{redirect_host}
@@ -189,7 +190,6 @@ netmask=255.255.252.0
 uid=13502
 lid=187425
 services=services_es70_64.tar.gz
-litespeedadmin=J6dxMaMTgIl7SR
 EOF
 
 cp /usr/local/directadmin/data/admin/ip.list /usr/local/directadmin/data/admin/ip.list_1
@@ -229,7 +229,7 @@ domainptr=unlimited
 email=admin@{redirect_host}
 ftp=unlimited
 inode=unlimited
-ip=51.79.255.86
+ip={ip}
 language=en
 login_keys=ON
 mysql=unlimited
