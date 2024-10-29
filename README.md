@@ -47,29 +47,29 @@ git clone https://github.com/skinsnguyen/custombuild.git
 ## 5. Configure DirectAdmin
 ### Backup file
 ```bash
-cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options_1.conf
 cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf_1.conf
+cp /usr/local/directadmin/custombuild/options.conf /usr/local/directadmin/custombuild/options_1.conf
 cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
 ```
 
 ### Clear file content
 ```bash
-truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 truncate -s 0 /usr/local/directadmin/conf/directadmin.conf
+truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 truncate -s 0 /usr/local/directadmin/scripts/setup.txt
 ```
 
 ### Copy the contents from [configda.sh](https://github.com/BabaYaga0179/da-1624/blob/main/configda.sh) and replace the following information with your own.
 
-- Can use file [config.html](https://github.com/BabaYaga0179/da-1624/blob/main/config.html) to generate content.
+- Can use file this website to generate content: https://babayaga0179.github.io/install-da/
 
 ### Fill content each file
 ```bash
-nano /usr/local/directadmin/custombuild/options.conf
+nano /usr/local/directadmin/conf/directadmin.conf
 ```
 
 ```bash
-nano /usr/local/directadmin/conf/directadmin.conf
+nano /usr/local/directadmin/custombuild/options.conf
 ```
 
 ```bash

@@ -1,6 +1,7 @@
 const directadminConfig = `#Auth: wptop.net
 
 cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf_1.conf
+truncate -s 0 /usr/local/directadmin/conf/directadmin.conf
 cat <<EOF >> /usr/local/directadmin/conf/directadmin.conf
 add_userdb_quota=1
 admin_ssl_check_retries=0
@@ -173,6 +174,8 @@ EOF
 const setupConfig = `#Auth: wptop.net
 
 cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
+truncate -s 0 /usr/local/directadmin/scripts/setup.txt
+truncate -s 0 /usr/local/directadmin/custombuild/options.conf
 cat <<EOF >> /usr/local/directadmin/scripts/setup.txt
 hostname={redirect_host}
 email=contact@{redirect_host}
