@@ -336,6 +336,8 @@ mv /usr/local/directadmin/data/admin/show_all_users.cache /usr/local/directadmin
 
 truncate -s 0 /usr/local/directadmin/custombuild/custombuild.log
 
+rm -rf /usr/local/directadmin/data/tickets/*
+
 /usr/local/directadmin/scripts/ipswap.sh 103.110.84.30 {ip}
 `;
 
