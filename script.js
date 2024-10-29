@@ -1,6 +1,6 @@
 const directadminConfig = `#Auth: wptop.net
 
-cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin.conf_1.conf
+cp /usr/local/directadmin/conf/directadmin.conf /usr/local/directadmin/conf/directadmin_1.conf
 truncate -s 0 /usr/local/directadmin/conf/directadmin.conf
 cat <<EOF >> /usr/local/directadmin/conf/directadmin.conf
 add_userdb_quota=1
@@ -174,7 +174,7 @@ EOF
 
 const setupConfig = `#Auth: wptop.net
 
-cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup.txt_1.conf
+cp /usr/local/directadmin/scripts/setup.txt /usr/local/directadmin/scripts/setup_1.txt
 truncate -s 0 /usr/local/directadmin/scripts/setup.txt
 cat <<EOF >> /usr/local/directadmin/scripts/setup.txt
 hostname={redirect_host}
