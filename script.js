@@ -332,13 +332,23 @@ php_admin_value[mail.log] = /home/admin/.php/php-mail.log
 security.limit_extensions = .php .php52 .php53 .php54 .php55 .php56 .php60 .php70 .php71 .phtml .inc .php72
 EOF
 
-mv /usr/local/directadmin/data/admin/show_all_users.cache /usr/local/directadmin/data/admin/show_all_users.cache_1
+cp /home/temp/directadmin/data/users/admin/ticket.conf /home/temp/directadmin/data/users/admin/ticket.conf_1
+truncate -s 0 /home/temp/directadmin/data/users/admin/ticket.conf
+cat <<EOF > /home/temp/directadmin/data/users/admin/ticket.conf
+ON=yes
+active=yes
+email=contact@{redirect_host}
+html=Follow <a href="http://www.{redirect_host}/support">this link</a> for a 3rd party ticket system.
+new=801
+newticket=0
+EOF
 
 truncate -s 0 /usr/local/directadmin/custombuild/custombuild.log
 
 rm -rf /usr/local/directadmin/data/tickets/*
 
 /usr/local/directadmin/scripts/ipswap.sh 103.110.84.30 {ip}
+/usr/local/directadmin/scripts/ipswap.sh 51.79.255.86 {ip}
 `;
 
 const networkConfig=`# Remove ifcfg-lo:100 configuration
