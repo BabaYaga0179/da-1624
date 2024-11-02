@@ -52,7 +52,7 @@ fi
   chown $username. /home/$username/domains/$domain/public_html/.wp-details.txt
 fi  # Kết thúc khối `if` kiểm tra $installWP
 
-# DELETE DOLLY PLUGIN AND INSTALL LITESPEED CACHE
+# Delete default plugins
 su -s /bin/bash -c "/usr/local/bin/wp plugin delete hello" $username
 su -s /bin/bash -c "/usr/local/bin/wp plugin delete akismet" $username
 
