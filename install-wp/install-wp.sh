@@ -2,9 +2,9 @@
 
 # Constants
 da_username="admin"
-domain="thienhung.top"
-ext="thienhungtop2"
-wpadmin="thienhung"
+domain="wptop.net"
+ext="wptopnet"
+wpadmin="wptop"
 wpadminpass=$(openssl rand -base64 18 | tr -dc 'A-Za-z0-9!@#$%^&*()-_=+{}[]<>?') > /dev/null
 
 # Disable directadmin index.html file
