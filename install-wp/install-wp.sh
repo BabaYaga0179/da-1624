@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# Constants
-da_username="admin"
-domain="wptop.net"
-ext="wptopnet"
-wpadmin="wptop"
+# Ask the user to enter variables
+read -p "Enter DirectAdmin username (e.g., admin): " da_username
+read -p "Enter domain (e.g., domain.com): " domain
+read -p "Enter database name (e.g., wp1234): " ext
+read -p "Enter WordPress admin username (e.g., wp-admin): " wpadmin
+# Generate a random password for the WordPress admin
 wpadminpass=$(openssl rand -base64 18 | tr -dc 'A-Za-z0-9!@#$%^&*()-_=+{}[]<>?') > /dev/null
-
-# Disable directadmin index.html file
-# if [ -f /home/$username/domains/$domain/public_html/index.html ]; then
-#     mv /home/$username/domains/$domain/public_html/index.html{,.bak}
-# fi
 
 # Move contents to backup folder
 if [ "$(ls -A /home/$da_username/domains/$domain/public_html)" ]; then
@@ -112,4 +108,3 @@ printf "\n\nWORDPRESS LOGIN CREDENTIALS:\nURL: https://$domain/wp-admin/\nUSERNA
 printf -- "--------------------------------------------------\n\n"
 
 exit 0;
-
